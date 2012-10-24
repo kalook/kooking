@@ -1,0 +1,129 @@
+{%  extends 'admin_base.html' %}
+{%  block content %}
+        <div class="row">
+          <!-- 
+          <div class="span4">
+            <h3>f page 카테고리</h3>
+            <ul class="category">
+            	<li><a href="/category/all/page/1">전체({{category_count_all}})</a></li>
+            	{% for list in category %}
+            	<li><a href="/category/{{list.id}}/page/1" target="_self">{{list.category}}( {{list.count}} )</a></li>
+            	{% endfor %}
+            </ul>
+          
+          </div>
+          -->
+          <section class="span22 ">
+		    {% if not request.session["user"] =="Administrator" %}
+		  <form method="post" action="">
+		  password 
+		  <input type="password" id="password" name="password"/>
+		  <input type="submit" value="로그인">
+		  </form>
+		  {% else %}
+		   <form method="post" action="/logout/">
+		  {{request.session["user"]}}
+		  <input type="submit" id="logout" value="Logout" name="logout"/>
+		  </form>
+		        <div stlye="width:100%;background:#e4e4e4;">
+          	<table style="width:100%;" border="1">
+          		<tr>
+          			<th>제목</th>
+          			<th>주소</th>
+          			<th>카테고리</th>
+          			<th>업체명</th>
+          			<th>담당자명</th>
+          			<th>연락처</th>
+          			<th>이메일</th>
+          			<th>노출</th>
+          		</tr>
+              
+          		{% for list in collection.object_list %}
+      						
+      							
+							<tr>
+								<td>{{list.page_title}}</td>
+								<td width="20%"><a href="http://facebook.com/{{list.page_name}}" target="_blank" >http://facebook.com/{{list.page_name}}</a></td>
+								<td>{{list.category_id.category}}</td>
+								
+								<td>{{list.marketing_id.company}}</td>
+								<td>{{list.marketing_id.charge}}</td>
+								<td>{{list.marketing_id.phone}}</td>
+								<td>{{list.marketing_id.email}}</td>
+								
+								<td>
+									{% if list.view %}
+									<input type="button" id="{{list.id}}" class="open_button" value="공개">
+									{% else %}
+									<input type="button" id="{{list.id}}" class="open_button" value="비공개">
+									{% endif %}
+								</td>
+							</tr>
+      							
+      						
+          		{% endfor %}
+            
+          	</table>
+            <article class=" centeringContainer ">
+              <ul class="pagination centered">
+               {% if not prev %}
+                  <li class="prev disabled">
+                    <a href="#">&larr; Previous</a>
+                  </li>
+                  {% else %}
+                  <li class="prev">
+                    <a href="/admin/page/{{prev}}">&larr; Previous</a>
+                  </li>
+                  {% endif %}
+                  
+                  {% for list in paging %}
+                    {% if (list|str_isEqual(page_number)) %}
+                      <li class="active">
+                        <a href="#">{{list}} </a>
+                      </li>
+                    {% else %}
+                      <li>
+                        <a href="/admin/page/{{list}}">{{list}}</a>
+                      </li>
+                    {% endif %}
+                  {% endfor %}
+                  
+                  {% if not next %}
+                    <li class="next disabled">
+                      <a href="#">Next &rarr;</a>
+                    </li>
+                  {% else %}
+                    <li class="next">
+                      <a href="/admin/page/{{next}}">Next &rarr;</a>
+                    </li>
+                  {% endif %}
+              </ul>
+            </article>
+          </div>
+          </section>
+        </div>
+        <script>
+        $(function(){
+        	$(".open_button").click(function(){
+        		var data={ id : $(this).attr("id") }
+        		var type=$(this).attr("value");
+        		$.post("/admin/status/",data,function(result){
+
+        			if (result=="success" ){
+        				if (type=="비공개"){
+        					$("#"+data.id).attr("value","공개");		
+        				}else{
+        					$("#"+data.id).attr("value","비공개");
+        				}
+        			}else{
+        				console.log("실패");
+        			}
+        		});
+        	});
+        });
+        </script>
+
+		{% endif %}
+{% endblock %}
+{% block add %}{% endblock %}
+

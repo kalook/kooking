@@ -1,0 +1,240 @@
+{%  extends 'base.html' %}
+{% block external_top %}
+    <meta property="og:title" content="페이스북 정보사이트 fpage.kr 드로잉:쇼 히어로 이벤트" />
+<meta property="og:type" content="activity" />
+<meta property="og:url" content="https://fpage.kr/event/{{event_name}}" />
+<meta property="og:image" content="https://fpage.kr/images/{{event_name}}_small.jpg" />
+<meta property="og:site_name" content="fpage이벤트" /> 
+
+    {% endblock %}
+{% block external %}
+
+<!--
+<script type="text/javascript" src="https://connect.facebook.net/ko_KR/all.js"></script>
+-->
+<script>
+
+
+  // this will fire when any of the like widgets are "liked" by the user
+  
+
+</script>
+<style type="text/css">
+	.fb_event{width:100%;}
+	
+	.like{background:transparent;position:absolute;top:1379px;left:550px;}
+	
+	.go_page{position:absolute;top:1211px;left:385px;display:block;}
+	.go_page div{width:193px;height:45px;background:transparent;}
+	.movie{position:absolute;top:945px;left:67px;}
+	.link1{background:transparent;position:absolute;top:2760px;left:180px;width:130px;height:43px;}
+	.link2{background:transparent;position:absolute;top:2760px;left:320px;width:140px;height:43px;}
+	.link3{background:transparent;position:absolute;top:2760px;left:480px;width:130px;height:43px;}
+	.link4{background:transparent;position:absolute;top:2800px;left:560px;width:150px;height:43px;}
+	.fb_edge_widget_with_comment span.fb_edge_comment_widget iframe.fb_ltr {display: none !important;}
+	/* make the like button smaller */
+	.fb_edge_widget_with_comment iframe{width:58px !important;}
+	/* but make the span that holds the comment box larger */
+</style>
+{% endblock %}
+
+{%  block content %}
+        <div class="row">
+          <div class="span4">
+            <h3>f page 카테고리</h3>
+            <ul class="category">
+            	<li><a href="/category/all/page/1">전체( {{category_count_all}} )</a></li>
+            	{% for list in category %}
+            	<li><a href="/category/{{list.id}}/page/1" target="_self">{{list.category}}( {{list.counting()}} )</a></li>
+            	{% endfor %}
+            </ul>
+            {% include "banner_left.html" %}
+          
+          </div>
+          <section class="event">
+          	<div id="fb-root"></div>
+
+			<script>
+				
+			 	window.fbAsyncInit = function() {
+				    FB.init({
+				      appId      : '120166908127437', // App ID
+				      channelUrl : 'https://connect.facebook.net/ko_KR/all.js', // Channel File
+				      status     : true, // check login status
+				      cookie     : true, // enable cookies to allow the server to access the session
+				      xfbml      : true  // parse XFBML
+				    });
+
+
+				    
+
+			    	FB.getLoginStatus(function(response) {
+
+
+						if (response.status === 'connected') {
+							var uid = response.authResponse.userID;
+							var accessToken = response.authResponse.accessToken;
+
+							
+							var callback="{{callback}}";
+							 //변수값 출력
+							
+							if(callback == "True"){
+									 
+							 	FB.api('/me', function(response) {
+									var data ={
+										'user_id' : response.id,
+										'email' : response.email,
+										'name' : response.name
+									} 
+										
+							    	$.post('/event/{{event_name}}',data,function(result){
+							    		if (result=='false'){
+											alert("이미 응모하셨습니다.");
+							    		}else{
+							    			var url = "https://fpage.kr/event/{{event_name}}";
+											var body = data.name+'님이 <드로잉:쇼 히어로> 이벤트에 참여하셨습니다. <드로잉:쇼 히어로> 이벤트에 '+data.name+'님의 친구들을 초대합니다. ' + url ;
+											var path = "https://fpage.kr/images/{{event_name}}_thumbnail.jpg";
+											$("body").css("cursor", "progress");
+											FB.api('/'+data.user_id+'/photos', 'post', { message: body,url:path}, function(callback) {
+													if (!callback || callback.error) {
+														alert('죄송합니다 공유가 안되었네요 관리자에게 알려주세요! first');
+														
+													} else {
+														$("body").css("cursor", "auto");
+														alert("응모가 완료되었습니다.");								
+													}
+												});
+							    			
+							    		}
+							    	});
+								   
+								});
+							}
+
+							FB.api('/me', function(response) {
+								var data ={
+									'user_id' : response.id,
+									'email' : response.email,
+									'name' : response.name
+								} 
+								FB.Event.subscribe('edge.create',
+							    function(response) {
+							    	
+							    	$.post('/event/{{event_name}}',data,function(result){
+								    		if (result=='false'){
+												alert("이미 응모하셨습니다.");
+								    		}else{
+								    			var url = "https://fpage.kr/event/{{event_name}}";
+												var body = data.name+'님이 <히어로> 이벤트에 참여하셨습니다. <히어로> 이벤트에 '+data.name+'님의 친구들을 초대합니다. ' + url ;
+												var path = "https://fpage.kr/images/{{event_name}}_thumbnail.jpg";
+												$("body").css("cursor", "progress");
+												FB.api('/'+data.user_id+'/photos', 'post', { message: body,url:path}, function(callback) {
+														if (!callback || callback.error) {
+															alert('죄송합니다 공유가 안되었네요 관리자에게 알려주세요!');
+															
+														} else {
+															$("body").css("cursor", "auto");
+															alert("응모가 완료되었습니다.");						
+														}
+													});
+								    			
+								    		}
+								    	});
+							    	
+							    }
+							  );
+							});
+							
+								
+						} else if (response.status === 'not_authorized') {
+
+							FB.Event.subscribe('edge.create',
+
+							    function(response) {
+									var oauth_url = 'https://www.facebook.com/dialog/oauth/';
+									    oauth_url += '?client_id=120166908127437';
+									    oauth_url += '&redirect_uri=' + encodeURIComponent('https://fpage.kr/event_oauth/');
+									    oauth_url += '&scope=email,publish_stream,photo_upload';
+								    window.location = oauth_url;
+								    
+							    }
+							  );
+
+						} else {
+
+							FB.Event.subscribe('edge.create',
+							    function(response) {
+									var oauth_url = 'https://www.facebook.com/dialog/oauth/';
+									    oauth_url += '?client_id=120166908127437';
+									    oauth_url += '&redirect_uri=' + encodeURIComponent('https://fpage.kr/event_oauth/');
+									    oauth_url += '&scope=email,publish_stream,photo_upload';
+								    window.location = oauth_url;
+								    
+							    }
+							  );
+
+							
+						// the user isn't logged in to Facebook.
+						}
+			 		});     
+				};
+
+			  // Load the SDK Asynchronously
+			  (function(d){
+			     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+			     if (d.getElementById(id)) {return;}
+			     js = d.createElement('script'); js.id = id; js.async = true;
+			     js.src = "//connect.facebook.net/ko_KR/all.js";
+			     ref.parentNode.insertBefore(js, ref);
+			   }(document));
+
+			</script>
+					
+
+ 			<div class="fb_event" >
+
+ 				<img src="/images/{{event_name}}.jpg" style="width:100%" usemap="#map1"/>
+ 				<div class="movie">
+ 					<iframe src="https://player.vimeo.com/video/46466998" width="652" height="367" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+ 				</div>
+ 				<map name="map1">
+ 					<area shape="rect" coords="234,1747,368,1787" href="http://www.drawingtheater.com/" target="_blank">
+ 					<area shape="rect" coords="380,1747,514,1787" href="http://www.facebook.com/drawingshowhero" target="_blank">
+ 					
+ 				</map>
+ 			
+ 				<div class="like">
+				<div class="fb-like" data-href="https://www.facebook.com/drawingshowhero" data-send="false" data-layout="button_count" data-width="20" data-show-faces="true"></div>
+
+ 				</div>
+ 				<!--
+ 				<a href="https://goo.gl/kvJ8h" class="link1" target="_blank"><div></div></a>
+ 				<a href=" https://twitter.com/lotte_ent" class="link2" target="_blank"><div></div></a>
+ 				<a href="https://www.facebook.com/lotteent.movie" class="link3" target="_blank"><div></div></a>
+ 				-->
+
+ 			</div>
+			<div id="fb-root"></div>
+			<script>(function(d, s, id) {
+			  var js, fjs = d.getElementsByTagName(s)[0];
+			  if (d.getElementById(id)) return;
+				js = d.createElement(s); js.id = id;
+				js.src = "//connect.facebook.net/ko_KR/all.js#xfbml=1&appId=377956702266740";
+				fjs.parentNode.insertBefore(js, fjs);
+			  }(document, 'script', 'facebook-jssdk'));</script>
+
+			<div class="fb-like-box" style="margin-bottom:5px;" data-href="http://www.facebook.com/fpage.kr" data-width="790" data-show-faces="false" data-stream="false" data-header="false"></div>
+
+
+
+ 			<div class="fb-comments" data-href="https://fpage.kr/event/{{event_name}}" data-num-posts="20" data-width="790" data-mobile="auto-detect" style="width:100%"></div>
+
+		
+	      </section>
+        </div>
+
+{% endblock %}
+{% block add %}{% endblock %}
+
+

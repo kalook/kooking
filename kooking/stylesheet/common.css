@@ -1,0 +1,144 @@
+/* Override some defaults */
+html, body {
+  background-color: #eee;
+  
+}
+img{border:0px}
+body {
+  padding-top: 40px; /* 40px to make the container go all the way to the bottom of the topbar */
+}
+.container > footer p {
+  text-align: center; /* center align it with the container */
+}
+.container {
+  width: 980px; /* downsize our container to make the content feel a bit tighter and more cohesive. NOTE: this removes two full columns from the grid, meaning you only go to 14 columns and not 16. */
+
+}
+
+/* The white background content wrapper */
+.container > .content {
+position:relative;
+
+  background-color: #fff;
+  padding: 20px;
+  margin: 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
+  -webkit-border-radius: 0 0 6px 6px;
+     -moz-border-radius: 0 0 6px 6px;
+          border-radius: 0 0 6px 6px;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+     -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+          box-shadow: 0 1px 2px rgba(0,0,0,.15);
+}
+
+/* Page header tweaks */
+.page-header {
+  background-color: #f5f5f5;
+  padding: 20px 20px 10px;
+  margin: -20px -20px 20px;
+}
+
+/* Styles you shouldn't keep as they are for displaying this base example only */
+.content .span10,
+.content .span4,
+.content .span12 {	
+  min-height: 500px;
+}
+/* Give a quick and non-cross-browser friendly divider */
+   .content .span12 {
+     margin-left: 0;
+     padding-left: 19px;
+     border-left: 1px solid #eee;
+   }
+
+   .topbar .btn {
+     border: 0;
+   }
+   section.main article{width:100%;position:relative;padding:0;clear:both;padding-bottom:20px;border-bottom:1px solid #eee;height:140px;}
+   section.main figure{width:25%;float:left;padding:0;margin:0px;}
+   section.main figure img{width:100px;height:100px;padding-top:20px}
+   section.main dl{width:75%;float:right;padding-top:20px;}
+   section.main dt{padding:0px;line-height:2em;}
+   section.main dd{width:100%;padding:0px;font-size:12px;line-height:2em;margin:0;}
+   
+   .category{list-style-image:url('/images/Like.png')}
+   .category li{padding-bottom:5px}
+   .paging{padding-left:100px}
+
+   .centeringContainer { text-align:center; }
+.centered {
+		height:26px; 
+		border: 1px solid #ddd;
+		border: 1px solid rgba(0, 0, 0, 0.15);
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+		border-radius: 3px;
+		-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+		-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+		display:table;
+		margin-left:auto;
+		margin-right:auto;
+		display:inline-block; 
+		}
+
+.logo {font-weight:bold}
+   /*광고 영역*/
+aside{width:230px;padding:0px;margin:0px;border-right: 1px solid #eee;}
+aside figure{margin:0px;padding:0px;}
+aside figcaption{width:100%;font-size:11px;color:#3B5998;font-weight:bold;padding-bottom:12px;padding-top:10px;}
+aside ul{width:100%;float:left;padding:0px;margin:0px;}
+aside ul li{float:right;width:100%;padding-bottom:10px;list-style-type:none;border-bottom:1px solid #eee;}
+aside img{float:left;}
+aside p{float:left;padding-left:10px;width:120px;}
+aside h3{padding:0px 6px;border-top:1px solid #E5E5E5;border-bottom:1px solid #D9D9D9;font-size:11px;background:#f2f2f2;}
+.marketing{position:relative;float:right;}
+.marketing table{width:100%;}
+.marketing th{width:14%;}
+
+.marketing table.user_info th{width:14%}
+.marketing .category {word-spacing:10px;}
+.marketing .category input{margin-right:3px}
+.marketing input[type='submit']{margin-left:40%}
+.category_banner{margin:0px}
+.category_banner li{list-style:none;padding:0px;margin-bottom:5px}
+.marketing_img{padding-bottom:20px;position:relative}
+.marketing_img .bt{position:absolute;left:124px;margin:0px;padding:0px}
+.marketing_img .bt img{margin:0px;padding:0px;float:left}
+
+.infomation{width:790px;float:right;border-left:1px solid #eee;padding-left:15px;padding-bottom:300px;}
+
+/*width:647px*/
+.event{position:relative;width:790px;float:left;border: 1px solid #d2d2d2;display:block;padding-bottom:50px}
+.event article{width:647px;margin:0 auto;padding-top:40px;padding-bottom:230px;}
+.fan_page dl{width:215px;float:left;padding-top:20px;}
+.fan_page dt img{width:204px;height:135px;border:1px solid #e8effb}
+.fan_page dd {float:left;padding-top:6px;font-size:11px;font-weight:bold;color:#666}
+.fan_page dd.like{clear:both}
+.event .event_label{position:absolute;width:86px;height:68px;background:url('../images/event_label.png') no-repeat;top:-1px;];left:19px}
+.sponseor img {width:110px;height:100px}
+.spon{position:absolute;top:20px;right:15px}
+.body_content{position:relative;width:980px;}
+.detail{width:700px;position:relative;float:left;}
+.picture{width:120px;height:120px;border:0}
+.detail header.top{position:relative;height:340px}
+.detail section{position:relative;}
+.detail article{padding:10px 10px 10px 10px;}
+
+.detail h3{width:700px;height:29px;padding:0px 0px 0px 6px;background:#f2f2f2;border-top:1px solid #e5e5e5;border-bottom:1px solid #d9d9d9 }
+header.top .picture_wrap{position:absolute;top:180px;left:20px;border:1px solid #cdcdcd;padding:4px;background:#fff}
+header.top span{position:absolute;top:280px;left:170px;font-size:14px;font-weight:bold;}
+header.top .cover{width: 700px;height:259px}
+header.none .picture_wrap{position:absolute;top:0px;left:20px;border:1px solid #cdcdcd;padding:4px;background:#fff}
+header.none span{position:absolute;top:90px;left:170px;font-size:14px;font-weight:bold;}
+header.none .cover_wrap{width:100%;height:150px;}
+
+header.none .cover{display:none}
+div.row{margin-left:0px}
+.category_page article p{}
+.category_page a.category_link{width:142px;display:inline-block;margin-left:10px}
+.category_page article img{width:120px;height:120px;padding:10px;border:1px solid #cfcfcf;}
+.category_page figure.about_category {width:142px;float:left}
+.category_page figurecaption{display:block;text-align:center;font-size:12px;padding-top:5px} 
+.page_info {line-height:20px}
+.page_info h4{font-weight:bold}
+footer{width:100%;position:relative;float:left}

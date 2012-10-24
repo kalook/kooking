@@ -1,0 +1,143 @@
+{%  extends 'base.html' %}
+{% block external_top %}
+<meta property="og:title" content="{{ name }}" />
+<meta property="og:type" content="activity" />
+<meta property="og:url" content="https://fpage.kr/detail/{{app_id}}" />
+<meta property="og:image" content="{{ picture }}" />
+<meta property="og:site_name" content="{{ name }}" />
+<meta property="og:description" content="{{ about }}" /> 
+
+{% endblock %}
+{%  block content %}
+        <div class="row">
+		<section class="detail">	
+				<header class="{% if cover %}top{% else %}none{% endif %}">
+				<div class="cover_wrap">
+				<img src="/image_proxy/?u={{cover|base64encode()}}" alt="cover" class="cover"/>
+				</div>
+				<div class="picture_wrap">
+					<img src="{{picture}}" alt="picture" class="picture"/>
+				</div>
+				
+				<span><a href="https://facebook.com/{{app_id}}" target="_blank" style="padding-right:10px">[ {{category}} ] {{ name }}</a><a href="https://facebook.com/{{app_id}}" target="_blank" class="btn small primary ">페이지 바로가기</a>
+					{{category.id}}
+				</span>
+				
+				</header>
+				<section class="score">
+					<header>
+						<h3>인기도 정보</h3>
+					</header>
+					<article>
+						<p style="">
+							<span class="number" style="float:left;line-height:33px">{{ (like|decimal) }}<span>명이 좋아합니다. 
+							<div id="fb-root"></div>
+							<script>
+								(function(d, s, id) {
+								  var js, fjs = d.getElementsByTagName(s)[0];
+								  if (d.getElementById(id)) return;
+								  js = d.createElement(s);
+								  js.id = id;
+								  js.src = "https://connect.facebook.net/ko_KR/all.js#xfbml=1&appId=120166908127437";
+								  fjs.parentNode.insertBefore(js, fjs);
+								}(document, 'script', 'facebook-jssdk'));
+				
+								</script>
+								<div class="fb-like" data-href="https://fpage.kr/detail/{{app_id}}" data-send="false" data-layout="button_count" data-width="120"  data-show-faces="false" data-font="arial"></div>
+						</p>
+						<p>
+							<span class="number">{{ (talker|decimal) }}<span>이야기 하고있는 사람들
+						</p>
+					</article>
+				</section>
+
+				<section class="page_information">
+					<header>
+						<h3>페이지 소개</h3>
+					</header>
+					<article class="page_info">
+						<p>
+						<h4>소개</h4>
+						{{ about }}
+						{% if company_overview  %}
+						<h4>회사소개</h4>
+						{{company_overview}}
+						{% endif %}
+						
+						{% if description %}
+						<h4>정보</h4>
+						{{description}}
+						{% endif %}
+
+						{% if pharma_safety_info %}
+						<h4>Safety Information</h4>
+						{{pharma_safety_info}}
+						{% endif %}
+						</p>
+					</article>
+				</section>
+
+				<section class="post_information">
+					<header>
+						<h3>포스트 정보</h3>
+					</header>
+					<article>
+						<p>
+							<div id="fb-root"></div>
+							<script>(function(d, s, id) {
+							  var js, fjs = d.getElementsByTagName(s)[0];
+							  if (d.getElementById(id)) return;
+							  js = d.createElement(s); js.id = id;
+							  js.src = "//connect.facebook.net/ko_KR/all.js#xfbml=1&appId={{code}}";
+							  fjs.parentNode.insertBefore(js, fjs);
+							}(document, 'script', 'facebook-jssdk'));</script>
+							<div class="fb-like-box" data-href="https://www.facebook.com/{{code}}" data-width="700" data-height="700" data-show-faces="false" data-stream="true" data-header="false"></div>
+						</p>
+					</article>
+				</section>
+
+				<section class="category_page">
+					<header>
+						<h3><span style="float:left">관련 카테고리 페이지</span> <a href="/category/{{category_id}}/page/1" class="btn small" target="_self" style="float:right;margin-top:2px;margin-right:2px">목록</a></h3>
+					</header>
+					<article>
+						
+						{% for img in relation_category%}
+						<a href="/detail/{{img.page_id}}" target="_self" class="category_link">
+						<figure class="about_category">
+						<img src="{{img.picture}}" alt="{{img.page_name}}" />
+						<figurecaption>
+						 {{img.page_title}}
+						</figurecaption>
+						</figure>
+						 </a>
+						{% endfor %}
+						
+					</article>
+				</section>
+
+				<section class="page_comment">
+					<header>
+						<h3>페이지에 대한 댓글</h3>
+					</header>
+					<article>
+					
+						<p>
+							<div id="fb-root"></div>
+							<script>(function(d, s, id) {
+							  var js, fjs = d.getElementsByTagName(s)[0];
+							  if (d.getElementById(id)) return;
+							  js = d.createElement(s); js.id = id;
+							  js.src = "//connect.facebook.net/ko_KR/all.js#xfbml=1&appId={{app_id}}";
+							  fjs.parentNode.insertBefore(js, fjs);
+							}(document, 'script', 'facebook-jssdk'));</script>
+							<div class="fb-comments" data-href="https://fpage.kr/detail/{{app_id}}" data-num-posts="200" data-width="700" data-mobile="auto-detect"></div>
+						</p>
+					</article>
+				</section>
+				
+          </section>
+          
+		   
+        </div>
+     {% endblock %}

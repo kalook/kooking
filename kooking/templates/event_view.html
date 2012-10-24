@@ -1,0 +1,79 @@
+{%  extends 'admin_base.html' %}
+{%  block content %}
+
+<table>
+  <tbody>
+    <tr>
+      <th width="20%">이벤트 TYPE</th>
+      <td>{{event.event_type}}</td>
+    </tr>
+    <tr>
+      <th>카테고리</th>
+      <td>
+        {{event.category}}
+      </td>
+    </tr>
+    <tr>
+      <th>주최</th>
+      <td>{{event.sponsorship}}</td>
+    </tr>
+    <tr>
+      <th>이벤트명</th>
+      <td>{{event.title}}</td>
+    </tr>
+    <tr>
+      <th>이벤트베너 (120*120)</th>
+      <td>
+        {% if event.banner %}
+        <img src="/files/events/{{event.banner}}" style="width:120px;height:120px"/>
+        {% elif event.link_type=="fpage" %}
+        <img src="/images/{{fpage_type}}_banner.jpg" style="width:120px;height:120px"/>
+        {% else %}
+        <img src="https://graph.facebook.com/{{(event.link | split_another_event())}}/picture?type=large" style="width:120px;height:120px"/>
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <th>응모기간</th>
+      <td>
+        시작일 : {{event.start_date}} / 종료일 : {{event.end_date}}
+      </td>
+    </tr>
+    <tr>
+      <th>당첨자 발표</th>
+      <td>
+        {{event.publish}}
+      </td>
+    </tr>
+    <tr>
+      <th>인원</th>
+      <td>
+        {{event.person}}
+      </td>
+    </tr>
+    <tr>
+      <th>상세페이지 링크</th>
+      <td>
+        <a href="{{event.link}}">{{event.link}}</a>
+      </td>
+    </tr>
+    {% if event.link_type=="fpage" %}
+    <tr>
+      <th>신청자 수</th>
+      <td>
+        {{applicants}}명 <a href="/admin/event_download/{{fpage_type}}" targer="_blank" class="btn info">다운로드</a>
+      </td>
+    </tr>
+    {% endif %}
+    <tr>
+      <th>등록일</th>
+      <th>{{event.date}}</th>
+    </tr>
+
+  </tbody>
+</table>
+<a href="/admin/events/modify/{{event.id}}" class="btn success">수정하기</a>
+<a href="/admin/events/1" class="btn primary">목록</a>
+{% endblock %}
+{% block add %}{% endblock %}
+

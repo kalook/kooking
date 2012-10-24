@@ -1,0 +1,120 @@
+{%  extends 'base.html' %}
+{% block external %}
+
+<script src="/scripts/jquery-1.7.2.min.js"></script>
+<script>
+
+</script>
+<style>
+a:hover article{background:#ccc;}
+
+.category_nav{
+background-color: #FEFBF3;
+border: 1px solid rgba(0, 0, 0, 0.2);
+box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+padding: 9px;
+}
+.category_nav li{float:left;list-style: none;padding-right:10px;margin: 0px}
+
+</style>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ko_KR/all.js#xfbml=1&appId=120166908127437";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+{% endblock %}
+
+        
+  {%  block content %}
+	<div class="span4">
+        	<h4 class="tab" style="padding-left:20px">이벤트</h4>
+        	<ul>
+        		<li><a href="/events/전체" target="_self">진행중인 이벤트</a></li>
+        		<li><a href="https://facebook.com/fpage.kr" target="_blank">당첨자 발표</a></li>
+        	</ul>
+		{% include "banner_left.html" %}
+	</div>
+  <section class="span12 main ">
+    <pre class="prettyprint">
+<h3>꼭 확인하세요!</h3>
+진행중인 이벤트 메뉴는 fpage 이벤트와 외부 페이스북 이벤트 정보로 구분됩니다.
+당첨자 발표 메뉴는 fpage 이벤트에 한해서 진행됩니다.
+외부 페이스북 페이지로 연결되는 이벤트는 fpage와 관련이 없으며 정보를 포함한 모든 사항에 대한 책임은 해당 정보의 페이스북에 있습니다.
+    </pre>
+    <nav class="category_nav ">
+      <ul>
+        {% for category in category_dic %}
+        <li>
+          <a href="/events/{{category.category}}/1">
+          {{(category.category|convert_category('eng'))}}({{category.count}})
+          </a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+    {% for event in events.object_list %}
+    <article class="event_list">
+      <div class="event_element" id="">
+        <figure>
+          {% if event.banner %}
+          <img src="/files/events/{{event.banner}}" style="width:120px;height:120px" />
+          {% elif event.link_type=="fpage" %}
+          <img src="https://fpage.kr/images/{{(event.link |split_fpage_event() )}}_banner.jpg" style="width:120px;height:120px" />
+          {% else %}
+          <img src="https://graph.facebook.com/{{(event.link | split_another_event())}}/picture?type=large" style="width:120px;height:120px" />
+          {% endif %}
+        </figure>
+        <dl style="width:65%">
+          <dt><a href="{{event.link}}" target="_blank">[{{event.category}}] {{event.title}}</a></dt>
+          <dd>주최 : {{event.sponsorship}}</dd>
+          <dd>응모기간 : {{event.start_date}} ~ {{event.end_date}}</dd>
+          <dd>당첨자발표 : {{event.publish}}</dd>
+          <dd>인원 : {{event.person}}</dd>
+        </dl>
+      </div>
+      <!--<div class="more" id=""><a href="#">▶ 더보기</a></div>-->
+    </article>
+    {% endfor %}
+    <article class=" centeringContainer ">
+    <ul class="pagination centered">
+     {% if not prev %}
+        <li class="prev disabled">
+          <a href="#">&larr; Previous</a>
+        </li>
+        {% else %}
+        <li class="prev">
+          <a href="/events/{{prev}}">&larr; Previous</a>
+        </li>
+        {% endif %}
+        
+        {% for list in paging %}
+          {% if (list|str_isEqual(page_number)) %}
+            <li class="active">
+              <a href="#">{{list}} </a>
+            </li>
+          {% else %}
+            <li>
+              <a href="/events/{{list}}/">{{list}}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+        
+        {% if not next %}
+          <li class="next disabled">
+            <a href="#">Next &rarr;</a>
+          </li>
+        {% else %}
+          <li class="next">
+            <a href="/events/{{next}}/">Next &rarr;</a>
+          </li>
+        {% endif %}
+    </ul>
+  </article>
+
+   
+  </section>
+ {% endblock %}
+
+    

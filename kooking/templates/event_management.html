@@ -1,0 +1,32 @@
+{%  extends 'base.html' %}
+{%  block content %}
+
+<span><a href="/admin/">등록리스트</a></span>
+<span><a href="/admin/event_management/">이벤트 정보</a></span>
+<span><a href="/admin/counselling/1/">온라인 상담관리</a></span>
+<table>
+  <thead>
+    <tr>
+      <td>섬네일</td>
+      <td>제목</td>
+      <td>신청자 수</td>
+      <td>download list</td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in result %}
+    <tr>
+      <td>
+        <img src="https://fpage.kr/images/{{p.type}}_banner.jpg" style="width:100px;height:100px"/>
+      </td>
+      <td>{{p.type}}</td>
+      <td>{{p.total}}</td>
+      <td><a href="/admin/event_download/{{p.type}}">다운받기</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
+{% block add %}{% endblock %}
+

@@ -1,0 +1,104 @@
+{%  extends 'base.html' %}
+{% block external_top %}
+    <meta property="og:title" content="페이스북 정보사이트 fpage.kr 광해" />
+<meta property="og:type" content="activity" />
+<meta property="og:url" content="https://fpage.kr/event/{{event_name}}" />
+<meta property="og:image" content="https://fpage.kr/images/{{event_name}}_small.jpg" />
+<meta property="og:image:height" content="86" />
+<meta property="og:image:width" content="111" /> 
+<meta property="og:site_name" content="fpage이벤트" /> 
+
+    {% endblock %}
+{% block external %}
+
+
+<style type="text/css">
+	.fb_event{width:100%;}
+	
+	.like{background:transparent;position:absolute;top:2146px;left:470px;}
+	.movie{position:absolute;top:1636px;left:31px;}
+	.like_loaging{display:none;z-index:1000;font-weight: bold}
+
+	.go_page{position:absolute;top:1211px;left:385px;display:block;}
+	.go_page div{width:193px;height:45px;background:transparent;}
+	.link1{background:transparent;position:absolute;top:2760px;left:180px;width:130px;height:43px;}
+	.link2{background:transparent;position:absolute;top:2760px;left:320px;width:140px;height:43px;}
+	.link3{background:transparent;position:absolute;top:2760px;left:480px;width:130px;height:43px;}
+	.link4{background:transparent;position:absolute;top:2800px;left:560px;width:150px;height:43px;}
+	.fb_edge_widget_with_comment span.fb_edge_comment_widget iframe.fb_ltr {display: none !important;}
+	.fb_edge_widget_with_comment iframe{width:58px !important;height:20px !important;}
+</style>
+{% endblock %}
+
+{%  block content %}
+<div id="fb-root"></div>
+
+        <div class="row">
+          <div class="span4">
+            <h3>f page 카테고리</h3>
+            <ul class="category">
+            	<li><a href="/category/all/page/1">전체( {{category_count_all}} )</a></li>
+            	{% for list in category %}
+            	<li><a href="/category/{{list.id}}/page/1" target="_self">{{list.category}}( {{list.counting()}} )</a></li>
+            	{% endfor %}
+            </ul>
+            {% include "banner_left.html" %}
+          
+          </div>
+          <section class="event">
+          	
+
+			<script>
+		
+
+				
+			 	window.fbAsyncInit = function() {
+				    FB.init({
+				      appId      : '330809080345859', // App ID
+				      channelUrl : 'https://connect.facebook.net/ko_KR/all.js', // Channel File
+				      status     : true, // check login status
+				      cookie     : true, // enable cookies to allow the server to access the session
+				      xfbml      : true  // parse XFBML
+				    });
+				    
+				    alert("asdad");
+				    FB.getLoginStatus(function(response) {
+				    	alert("Asda");
+					    if (response.status === 'connected') {
+								var uid = response.authResponse.userID;
+								var accessToken = response.authResponse.accessToken;
+								alert("asdas");
+								
+						    
+						}else{
+							console.log(response);
+						}
+
+					});
+
+
+				};
+
+
+
+
+			  // Load the SDK Asynchronously
+			  (function(d){
+			     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+			     if (d.getElementById(id)) {return;}
+			     js = d.createElement('script'); js.id = id; js.async = true;
+			     js.src = "//connect.facebook.net/ko_KR/all.js";
+			     ref.parentNode.insertBefore(js, ref);
+			   }(document));
+
+			</script>
+					
+
+ 			
+	      </section>
+        </div>
+
+{% endblock %}
+{% block add %}{% endblock %}
+
+

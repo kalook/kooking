@@ -1,0 +1,108 @@
+{%  extends 'base.html' %}
+{% block external %}
+
+<script src="/scripts/jquery-1.7.2.min.js"></script>
+<script>
+function pop(){ 
+window.open("/popup/", "pop", "width=500,height=400,history=no,resizable=no,status=no,scrollbars=no,menubar=no");
+}
+$(function(){
+	//pop();
+
+});
+</script>
+<style>
+a:hover article{background:#ccc;}
+</style>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ko_KR/all.js#xfbml=1&appId=120166908127437";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+{% endblock %}
+
+        
+        {%  block content %}
+		<div class="span4">
+            <h5 class="tab"style="font-weight:bold;padding-left:10px">페이지 정보</h5>
+            <ul class="category">
+            	<li><a href="/pageinfo/all/page/1">전체({{category_count_all}})</a></li>
+            	{% for list in category %}
+            	<li><a href="/pageinfo/{{list.id}}/page/1" target="_self">{{list.category}}( {{list.counting()}} )</a></li>
+            	{% endfor %}
+            </ul>
+			{% include "banner_left.html" %}
+		</div>
+          <section class="span12 main">
+          
+          <h3><span style="color:#C62C2C">{{category_name}} 카테고리에 총{{category_count}}개의 f page 가 있습니다  </span> <a href="/" >>> 홈 돌아가기</a> </h3>
+            
+			{% for list in collection.object_list %}
+			<article>
+            	<figure>
+            		<img src="{{list.picture}}" alt="대표사진"/>
+            	</figure>
+        		<dl>
+        			<dt>[{{list.category_id.category}}] <a href="/detail/{{list.page_id}}" target="_self" alt="{{list.page_title}}">{{ list.page_title }}</a></dt>
+        			<dd class="like">{{ (list.like|decimal) }}명이 좋아합니다. 
+                	<!--  
+	                <div id="fb-root"></div>
+	                -->
+	                <script>
+	                (function(d, s, id) {
+	                  var js, fjs = d.getElementsByTagName(s)[0];
+	                  if (d.getElementById(id)) return;
+	                  js = d.createElement(s);
+	                  js.id = id;
+	                  js.src = "https://connect.facebook.net/ko_KR/all.js#xfbml=1&appId={{list.page_name}}";
+	                  fjs.parentNode.insertBefore(js, fjs);
+	                }(document, 'script', 'facebook-jssdk'));
+	
+	                </script>
+	                <div class="fb-like" data-href="https://fpage.kr/detail/{{list.page_id}}" data-send="false" data-layout="button_count" data-width="120"  data-show-faces="false" data-font="arial"></div>
+	
+	
+	              </dd>
+        			<dd class="talks">{{ (list.talker|decimal) }} 이야기 하고 있는 사람들</dd>
+        			<dd class="text">{{ (list.description|str_short)[:90] }}</dd>
+        		</dl>
+            </article>
+            {% endfor %}
+            {% if (not type=='recommand')  %}
+            <article class="paging" >
+            <div class=" centeringContainer ">
+           		{% set p = page %}
+				<ul class="pagination centered">
+				 {% if not prev %}
+				    <li class="prev disabled"><a href="#">&larr; Previous</a></li>
+				    {% else %}
+				    <li class="prev"><a href="/pageinfo/{{type}}/page/{{prev}}">&larr; Previous</a></li>
+				    {% endif %}
+				    
+				    {% for list in paging %}
+					   	{% if (list|str_isEqual(page_number)) %}
+					    	<li class="active"><a href="#">{{list}} </a></li>
+					  	{% else %}
+					  		<li><a href="/pageinfo/{{type}}/page/{{list}}">{{list}}</a></li>
+					  	{% endif %}
+					  	
+				  	{% endfor %}
+				  	
+				  	{% if not next %}
+				    	<li class="next disabled"><a href="#">Next &rarr;</a></li>
+				    {% else %}
+				    	<li class="next"><a href="/pageinfo/{{type}}/page/{{next}}">Next &rarr;</a></li>
+				    {% endif %}
+				   
+				</ul>
+			</div>
+			</article>
+			{% endif %}
+
+          </section>         
+ {% endblock %}
+
+    

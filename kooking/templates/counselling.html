@@ -1,0 +1,96 @@
+{%  extends 'admin_base.html' %}
+{%  block content %}
+        <div class="row">
+          <!-- 
+          <div class="span4">
+            <h3>f page 카테고리</h3>
+            <ul class="category">
+            	<li><a href="/category/all/page/1">전체({{category_count_all}})</a></li>
+            	{% for list in category %}
+            	<li><a href="/category/{{list.id}}/page/1" target="_self">{{list.category}}( {{list.count}} )</a></li>
+            	{% endfor %}
+            </ul>
+          
+          </div>
+          -->
+          <section class="span22 ">
+		    {% if not request.session["user"] =="Administrator" %}
+		  <form method="post" action="/admin">
+		  password 
+		  <input type="password" id="password" name="password"/>
+		  <input type="submit" value="로그인">
+		  </form>
+		  {% else %}
+		   <form method="post" action="/logout/">
+		  {{request.session["user"]}}
+		  <input type="submit" id="logout" value="Logout" name="logout"/>
+		  </form>
+      <span><a href="/admin/">등록리스트</a></span>
+      <span><a href="/admin/event_management/">이벤트 정보</a></span>
+      <span><a href="/admin/counselling/1/">온라인 상담관리</a></span>
+      
+       
+		 
+		        <div stlye="width:100%;background:#e4e4e4;">
+          	<table style="width:100%;" border="1">
+          		<tr>
+          			<th>번호</th>
+          			<th width="50%">문의제목</th>
+          			<th>회사명</th>
+          			<th>등록일</th>
+          		</tr>
+              
+          		{% for list in counselling.object_list %}
+							<tr>
+								<td>{{list.id}}</td>
+								<td><a href="/admin/counselling_view/{{list.id}}/">{{list.title}}</a></td>
+								<td>{{list.company}}</td>
+								<td>{{list.date}}</td>
+							</tr>
+          		{% endfor %}
+            
+          	</table>
+            <article class=" centeringContainer ">
+              <ul class="pagination centered">
+               {% if not prev %}
+                  <li class="prev disabled">
+                    <a href="#">&larr; Previous</a>
+                  </li>
+                  {% else %}
+                  <li class="prev">
+                    <a href="/admin/counselling/{{prev}}">&larr; Previous</a>
+                  </li>
+                  {% endif %}
+                  
+                  {% for list in paging %}
+                    {% if (list|str_isEqual(page_number)) %}
+                      <li class="active">
+                        <a href="#">{{list}} </a>
+                      </li>
+                    {% else %}
+                      <li>
+                        <a href="/admin/counselling/{{list}}/">{{list}}</a>
+                      </li>
+                    {% endif %}
+                  {% endfor %}
+                  
+                  {% if not next %}
+                    <li class="next disabled">
+                      <a href="#">Next &rarr;</a>
+                    </li>
+                  {% else %}
+                    <li class="next">
+                      <a href="/admin/counselling/{{next}}/">Next &rarr;</a>
+                    </li>
+                  {% endif %}
+              </ul>
+            </article>
+          </div>
+          </section>
+        </div>
+
+
+		{% endif %}
+{% endblock %}
+{% block add %}{% endblock %}
+
