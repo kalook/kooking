@@ -1,6 +1,38 @@
 
 from django.db import models
 
+class Assemblyman(models.Model):
+    name = models.CharField(max_length=10,null=True)
+    key = models.IntegerField(default=0,null=True)
+    political_party = models.CharField(max_length=50,null=True)
+    area = models.CharField(max_length=255,null=True) 
+    phone = models.CharField(max_length=255,null=True) 
+    email = models.CharField(max_length=255,null=True) 
+    twitter = models.CharField(max_length=255,null=True) 
+    facebook = models.CharField(max_length=255,null=True) 
+    homepage = models.CharField(max_length=255,null=True)
+    commission = models.CharField(max_length=255,null=True)
+
+class Plenary_attendance(models.Model):
+    count = models.CharField(max_length=255,null=True)
+    assemblyman = models.ForeignKey(Assemblyman,null=True)
+    date = models.DateField(null=True)
+    attendance = models.CharField(max_length=10,null=True)
+
+class Bill(models.Model):
+    result_date = models.CharField(max_length=50,null=True)
+    count = models.CharField(max_length=50,null=True)
+    title = models.CharField(max_length=255,null=True)
+    url = models.CharField(max_length=255,null=True)
+    result = models.CharField(max_length=10,null=True)
+    date = models.DateTimeField(auto_now_add=True)
+    
+class Bill_result(models.Model):
+    bill = models.ForeignKey(Bill,null=True)
+    assemblyman = models.ForeignKey(Assemblyman,null=True)
+    result = models.CharField(max_length=10,null=True)
+    date    =   models.DateTimeField(auto_now_add=True)
+'''
 class Category(models.Model):
     category = models.CharField(max_length=1024,null=True)
     category_eng = models.CharField(max_length=1024,null=True)
@@ -85,4 +117,4 @@ class Counselling(models.Model):
     contents    =   models.TextField(null=True) 
     date        =   models.DateTimeField(auto_now_add=True)
     ip          =   models.CharField(max_length=15)
-    
+'''

@@ -2,30 +2,17 @@
 <html lang="ko">
   <head>
     <meta charset="utf-8">
-    <title>페이스북 페이지 정보모음 사이트</title>
+    <title>Kooking :: 국회의원 랭킹 시스템</title>
     {% block external_top %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <meta property="og:title" content="페이스북 모음 사이트!" /> 
+    <meta property="og:title" content="국회의원 감찰 시스템" /> 
     <meta property="og:image" content="https://fpage.kr/images/banner_event.png" /> 
-    <meta property="og:description" content="페이스북 모음 사이트 입니다 ^^" /> 
-    <meta property="og:url" content="https://fpage.kr">
+    <meta property="og:description" content="대국민 국회의원 감찰 시스템 입니다." /> 
+    <meta property="og:url" content="http://kooking.kr">
     {% endblock %}
 
-
-	<script type="text/javascript"> 
-		/*
-    var $buoop = {vs:{i:6,f:3.6,o:10.6,s:4,n:9}} 
-		$buoop.ol = window.onload; 
-		window.onload=function(){ 
-		 try {if ($buoop.ol) $buoop.ol();}catch (e) {} 
-		 var e = document.createElement("script"); 
-		 e.setAttribute("type", "text/javascript"); 
-		 e.setAttribute("src", "http://browser-update.org/update.js"); 
-		 document.body.appendChild(e); 
-		} */
-    
-	</script> 
 	
 
    
@@ -34,100 +21,55 @@
     <![endif]->
 
     <!-- Le styles -->
-    <link href="/stylesheet/fbootstrapp/bootstrap.css" rel="stylesheet">
+    
     <script src="/scripts/jquery-1.7.2.min.js"></script>
+    <link href="/stylesheet/css/bootstrap.css" rel="stylesheet">
+    <link href="/stylesheet/css/bootstrap-responsive.css" rel="stylesheet">
+     <!--
+    <link href="/stylesheet/fbootstrapp/bootstrap.css" rel="stylesheet">
      <link href="/stylesheet/common.css" rel="stylesheet">
+   -->
      <style>
-     .pills a{text-shadow: 0 0px 0px #FFFFFF; font-weight: bold;}
-     .topbar div > ul a, .nav a {padding: 6px 10px 9px;}
-     .topbar div > ul .active > a, .nav .active > a{background-color: #1a3c6c;}
-     .topbar div > ul a:hover{background-color: #1a3c6c;}
+     body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
      </style>
 
-    <script>
-
-    $(function(){
-      var list = ["danger2012","frankenweenie"];
-      var i = list.length-1;
-      setInterval(function(){
-        //var i = Math.floor(Math.random()*list.length);
-         
-        if (i<0){
-          i=list.length-1;;
-        }
-        var banner = "/images/"+list[i]+"_banner.jpg";
-        var link = "/event/"+list[i];
-        $(".event_banner a img").attr("src",banner);
-        $(".event_banner a").attr("href",link);
-        i--;
-
-      },3000);  
-      
-
-      });
-    </script>
+    
 	{% block external %}{% endblock %}
   
   </head>
 
   <body>
-
-    <div class="topbar">
-      <div class="fill">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
         <div class="container">
-          <div style="width:160px;float:left;padding-left:20px">
-          <a class="brand" href="/"><span class="logo">f page</span></a>
-          </div>
-          <!--
-          <ul class="nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-      		-->
+          <button data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar" type="button">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">Kooking</a>
 
-          <div class="row">
-            <div class="span10">
-              <ul class="pills">
-                <li ><a href="/pageinfo/all/page/1" targe="_self" >페이지정보</a></li>
-                <li><a href="#" targe="_self" onClick="alert('준비중입니다^^;');">APP월드</a></li>
-                <li><a href="" targe="_self" onClick="alert('준비중입니다^^;');">이벤트</a></li>
-                <li><a href="/marketing/" targe="_self" >마케팅 센터</a></li>
-                <!--
-                <li><a href="" targe="_self" >facebook Login</a></li>
-                -->
-              </ul>
-            </div>
-            <div class="span6" style="float:right">
-              <form action="/category/search/"   method="GET">
-                <input class="span4" id="search" name="search" type="text" placeholder="f-page에서 검색을 해보세요" style="margin-right:5px;margin-left:0px">
-                <button class="btn" type="submit">search</button>
-              </form>
-            </div>
-          </div> 
+         
+
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="/">본회의 출석 순위</a></li>
+              <li><a href="/category/abstention">기권 순위</a></li>
+              <li><a href="/category/not_vote">불참 순위</a></li>
+              
+            </ul>
+          </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
 
     <div class="container">
+      {% block content %}{% endblock %}
 
-      <div class="content body_content" >
-        <div class="row">
-          {% block content %}{% endblock %}
-          {% block add %}
-          {% include 'banner_right.html' %}
-          {% endblock %}
-    
-        </div>
-      </div>
-
-      <footer>
-        <p><a href="/info/">f page소개</a> | <!--<a href="#">개인정보취급방침</a> |--> <a href="/marketing/">광고 및 제휴 안내</a> </p>
-        <p>COPYRIGHT@inthe-Company CO LTD. ALL RIGHTS RESERVED</p>
-      </footer>
-
-    </div> <!-- /container -->
-
+    </div>
+<!--
 	<script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -141,6 +83,6 @@
   })();
 
 </script>
-
+-->
   </body>
 </html>
